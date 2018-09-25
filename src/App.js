@@ -68,7 +68,19 @@ class App extends Component {
 
     this.updatePosition = this.updatePosition.bind(this);
 
-    this.generatePhrase();
+    axios.get('/oehu/getConfigurated').then( result => {
+        if(result.data.configurated) { //if configurated go to dashboard
+           axios.get('/oehu/getConfig').then( result => {
+              window.location = "https://oehu.org/dashboard/" + result.data.deviceID;
+           });
+           return;
+        }
+        else{
+           this.generatePhrase();
+        }
+    });
+
+
   }
 
 
